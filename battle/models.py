@@ -57,9 +57,14 @@ class BattleRoom(models.Model):
 class BattleQuestion(models.Model):
     """Questions assigned to specific BattleRoom (subset of quiz quest)."""
     
-    ud = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=True)
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=True)
     battle = models.ForeignKey(
-        "quizzes.Question", on_delete=models.CASCADE, related_name="battle_usages",
+        "battle.BattleRoom", on_delete=models.CASCADE, related_name="battle_usages",
+    )
+    question = models.ForeignKey(
+        "quizzes.Question",
+        on_delete=models.CASCADE,
+        related_name="battle_questions",
     )
     order = models.PositiveSmallIntegerField(default=0)
     

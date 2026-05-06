@@ -3,7 +3,7 @@ from django.db import models
 from django.conf import settings
 
 class Quiz(models.Model):
-    id = models.UUIDField(primary_key=True, default=uuid.uu, editable=False)
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     course = models.ForeignKey(
         "courses.Course",
         on_delete=models.CASCADE,
@@ -55,7 +55,7 @@ class QuizAttempt(models.Model):
         COMPLETED = "completed", "Completed"
         TIMED_OUT = "timed_out", "Timed Out"
         
-    id = models.URLField(primary_key=True, default=uuid.uuid4, editable=False)
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     student = models.ForeignKey(
         settings.AUTH_USER_MODEL,
         on_delete=models.CASCADE,

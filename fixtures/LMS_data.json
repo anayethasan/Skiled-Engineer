@@ -1,0 +1,698 @@
+[
+  {
+    "model": "accounts.user",
+    "pk": "00000000-0000-0000-0000-000000000001",
+    "fields": {
+      "name": "Rahim Admin",
+      "first_name": "Rahim",
+      "last_name": "Hossain",
+      "email": "rahim.admin@skiled.com",
+      "password": "pbkdf2_sha256$1200000$x96fLGk5MjjCOExIGejWcc$kH1fwRMT5it6LvzrzckBEFCGZsdynotYul4MFMINMJo=",
+      "phone_number": "01711000001",
+      "address": "House 12, Road 5, Dhanmondi, Dhaka",
+      "role": "admin",
+      "is_verified": true,
+      "is_active": true,
+      "is_staff": true,
+      "is_superuser": false,
+      "profile": "",
+      "date_joined": "2024-01-01T08:00:00Z",
+      "groups": [],
+      "user_permissions": [],
+      "created_at": "2024-01-01T08:00:00Z"
+    }
+  },
+  {
+    "model": "accounts.user",
+    "pk": "00000000-0000-0000-0000-000000000002",
+    "fields": {
+      "name": "Karim Teacher",
+      "first_name": "Karim",
+      "last_name": "Uddin",
+      "email": "karim.teacher@skiled.com",
+      "password": "pbkdf2_sha256$1200000$x96fLGk5MjjCOExIGejWcc$kH1fwRMT5it6LvzrzckBEFCGZsdynotYul4MFMINMJo=",
+      "phone_number": "01722000002",
+      "address": "Flat 3B, Mirpur 10, Dhaka",
+      "role": "teacher",
+      "is_verified": true,
+      "is_active": true,
+      "is_staff": false,
+      "is_superuser": false,
+      "profile": "",
+      "date_joined": "2024-01-05T09:00:00Z",
+      "groups": [],
+      "user_permissions": [],
+      "created_at": "2024-01-05T09:00:00Z"
+    }
+  },
+  {
+    "model": "accounts.user",
+    "pk": "00000000-0000-0000-0000-000000000003",
+    "fields": {
+      "name": "Nadia Teacher",
+      "first_name": "Nadia",
+      "last_name": "Islam",
+      "email": "nadia.teacher@skiled.com",
+      "password": "pbkdf2_sha256$1200000$x96fLGk5MjjCOExIGejWcc$kH1fwRMT5it6LvzrzckBEFCGZsdynotYul4MFMINMJo=",
+      "phone_number": "01733000003",
+      "address": "Road 7, Block C, Uttara, Dhaka",
+      "role": "teacher",
+      "is_verified": true,
+      "is_active": true,
+      "is_staff": false,
+      "is_superuser": false,
+      "profile": "",
+      "date_joined": "2024-01-08T10:00:00Z",
+      "groups": [],
+      "user_permissions": [],
+      "created_at": "2024-01-08T10:00:00Z"
+    }
+  },
+  {
+    "model": "accounts.user",
+    "pk": "00000000-0000-0000-0000-000000000004",
+    "fields": {
+      "name": "Arif Student",
+      "first_name": "Arif",
+      "last_name": "Hasan",
+      "email": "arif.student@skiled.com",
+      "password": "pbkdf2_sha256$1200000$x96fLGk5MjjCOExIGejWcc$kH1fwRMT5it6LvzrzckBEFCGZsdynotYul4MFMINMJo=",
+      "phone_number": "01744000004",
+      "address": "Village Rayer Bazar, Dhaka",
+      "role": "student",
+      "is_verified": true,
+      "is_active": true,
+      "is_staff": false,
+      "is_superuser": false,
+      "profile": "",
+      "date_joined": "2024-02-01T11:00:00Z",
+      "groups": [],
+      "user_permissions": [],
+      "created_at": "2024-02-01T11:00:00Z"
+    }
+  },
+  {
+    "model": "accounts.user",
+    "pk": "00000000-0000-0000-0000-000000000005",
+    "fields": {
+      "name": "Sadia Student",
+      "first_name": "Sadia",
+      "last_name": "Akter",
+      "email": "sadia.student@skiled.com",
+      "password": "pbkdf2_sha256$1200000$x96fLGk5MjjCOExIGejWcc$kH1fwRMT5it6LvzrzckBEFCGZsdynotYul4MFMINMJo=",
+      "phone_number": "01755000005",
+      "address": "Sector 11, Uttara, Dhaka",
+      "role": "student",
+      "is_verified": true,
+      "is_active": true,
+      "is_staff": false,
+      "is_superuser": false,
+      "profile": "",
+      "date_joined": "2024-02-10T12:00:00Z",
+      "groups": [],
+      "user_permissions": [],
+      "created_at": "2024-02-10T12:00:00Z"
+    }
+  },
+  {
+    "model": "accounts.user",
+    "pk": "00000000-0000-0000-0000-000000000006",
+    "fields": {
+      "name": "Tanvir Student",
+      "first_name": "Tanvir",
+      "last_name": "Ahmed",
+      "email": "tanvir.student@skiled.com",
+      "password": "pbkdf2_sha256$1200000$x96fLGk5MjjCOExIGejWcc$kH1fwRMT5it6LvzrzckBEFCGZsdynotYul4MFMINMJo=",
+      "phone_number": "01766000006",
+      "address": "Bashundhara R/A, Block D, Dhaka",
+      "role": "student",
+      "is_verified": false,
+      "is_active": true,
+      "is_staff": false,
+      "is_superuser": false,
+      "profile": "",
+      "date_joined": "2024-03-01T08:30:00Z",
+      "groups": [],
+      "user_permissions": [],
+      "created_at": "2024-03-01T08:30:00Z"
+    }
+  },
+  {
+    "model": "courses.department",
+    "pk": "10000000-0000-0000-0000-000000000001",
+    "fields": {
+      "name": "Computer Science & Engineering",
+      "slug": "cse",
+      "created_at": "2024-01-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "courses.department",
+    "pk": "10000000-0000-0000-0000-000000000002",
+    "fields": {
+      "name": "Electrical Engineering",
+      "slug": "ee",
+      "created_at": "2024-01-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "courses.department",
+    "pk": "10000000-0000-0000-0000-000000000003",
+    "fields": {
+      "name": "Data Science & AI",
+      "slug": "ds-ai",
+      "created_at": "2024-01-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "courses.course",
+    "pk": "20000000-0000-0000-0000-000000000001",
+    "fields": {
+      "title": "Python Programming for Beginners",
+      "description": "Learn Python from scratch — variables, loops, functions, OOP and more.",
+      "department": "10000000-0000-0000-0000-000000000001",
+      "instructor": "00000000-0000-0000-0000-000000000002",
+      "status": "published",
+      "thumbnail": "",
+      "price": "0.00",
+      "is_free": true,
+      "created_at": "2024-01-01T00:00:00Z",
+      "updated_at": "2024-01-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "courses.course",
+    "pk": "20000000-0000-0000-0000-000000000002",
+    "fields": {
+      "title": "Django REST Framework — Build Real APIs",
+      "description": "Build production-grade REST APIs with Django, DRF, JWT auth and deployment.",
+      "department": "10000000-0000-0000-0000-000000000001",
+      "instructor": "00000000-0000-0000-0000-000000000002",
+      "status": "published",
+      "thumbnail": "",
+      "price": "499.00",
+      "is_free": false,
+      "created_at": "2024-01-01T00:00:00Z",
+      "updated_at": "2024-01-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "courses.course",
+    "pk": "20000000-0000-0000-0000-000000000003",
+    "fields": {
+      "title": "Machine Learning with Scikit-Learn",
+      "description": "Supervised and unsupervised ML, model evaluation, and real datasets.",
+      "department": "10000000-0000-0000-0000-000000000003",
+      "instructor": "00000000-0000-0000-0000-000000000003",
+      "status": "published",
+      "thumbnail": "",
+      "price": "699.00",
+      "is_free": false,
+      "created_at": "2024-01-01T00:00:00Z",
+      "updated_at": "2024-01-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "courses.course",
+    "pk": "20000000-0000-0000-0000-000000000004",
+    "fields": {
+      "title": "Data Structures & Algorithms",
+      "description": "Arrays, LinkedLists, Trees, Graphs, Sorting and searching for coding interviews.",
+      "department": "10000000-0000-0000-0000-000000000001",
+      "instructor": "00000000-0000-0000-0000-000000000003",
+      "status": "draft",
+      "thumbnail": "",
+      "price": "399.00",
+      "is_free": false,
+      "created_at": "2024-01-01T00:00:00Z",
+      "updated_at": "2024-01-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "enrollments.enrollment",
+    "pk": "30000000-0000-0000-0000-000000000001",
+    "fields": {
+      "student": "00000000-0000-0000-0000-000000000004",
+      "course": "20000000-0000-0000-0000-000000000001",
+      "progress": 100,
+      "is_completed": true,
+      "enrolled_at": "2024-02-05T08:00:00Z",
+      "completed_at": "2024-02-20T18:00:00Z"
+    }
+  },
+  {
+    "model": "enrollments.enrollment",
+    "pk": "30000000-0000-0000-0000-000000000002",
+    "fields": {
+      "student": "00000000-0000-0000-0000-000000000004",
+      "course": "20000000-0000-0000-0000-000000000002",
+      "progress": 60,
+      "is_completed": false,
+      "enrolled_at": "2024-02-21T09:00:00Z",
+      "completed_at": null
+    }
+  },
+  {
+    "model": "enrollments.enrollment",
+    "pk": "30000000-0000-0000-0000-000000000003",
+    "fields": {
+      "student": "00000000-0000-0000-0000-000000000005",
+      "course": "20000000-0000-0000-0000-000000000001",
+      "progress": 40,
+      "is_completed": false,
+      "enrolled_at": "2024-02-15T10:00:00Z",
+      "completed_at": null
+    }
+  },
+  {
+    "model": "enrollments.enrollment",
+    "pk": "30000000-0000-0000-0000-000000000004",
+    "fields": {
+      "student": "00000000-0000-0000-0000-000000000005",
+      "course": "20000000-0000-0000-0000-000000000003",
+      "progress": 80,
+      "is_completed": false,
+      "enrolled_at": "2024-03-01T11:00:00Z",
+      "completed_at": null
+    }
+  },
+  {
+    "model": "enrollments.enrollment",
+    "pk": "30000000-0000-0000-0000-000000000005",
+    "fields": {
+      "student": "00000000-0000-0000-0000-000000000006",
+      "course": "20000000-0000-0000-0000-000000000002",
+      "progress": 20,
+      "is_completed": false,
+      "enrolled_at": "2024-03-05T12:00:00Z",
+      "completed_at": null
+    }
+  },
+  {
+    "model": "quizzes.quiz",
+    "pk": "40000000-0000-0000-0000-000000000001",
+    "fields": {
+      "course": "20000000-0000-0000-0000-000000000001",
+      "title": "Python Basics Quiz",
+      "description": "Test your knowledge of Python fundamentals.",
+      "time_limit_minutes": 15,
+      "created_at": "2024-01-01T00:00:00Z",
+      "updated_at": "2024-01-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "quizzes.quiz",
+    "pk": "40000000-0000-0000-0000-000000000002",
+    "fields": {
+      "course": "20000000-0000-0000-0000-000000000002",
+      "title": "DRF Authentication Quiz",
+      "description": "JWT, sessions and permissions in Django REST Framework.",
+      "time_limit_minutes": 20,
+      "created_at": "2024-01-01T00:00:00Z",
+      "updated_at": "2024-01-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "quizzes.question",
+    "pk": "50000000-0000-0000-0000-000000000001",
+    "fields": {
+      "quiz": "40000000-0000-0000-0000-000000000001",
+      "question_text": "Which of the following is a mutable data type in Python?",
+      "options": {
+        "A": "tuple",
+        "B": "string",
+        "C": "list",
+        "D": "int"
+      },
+      "correct_answer": "C",
+      "topic": "Python Data Types",
+      "difficulty": "easy",
+      "created_at": "2024-01-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "quizzes.question",
+    "pk": "50000000-0000-0000-0000-000000000002",
+    "fields": {
+      "quiz": "40000000-0000-0000-0000-000000000001",
+      "question_text": "What is the output of: print(type([]))?",
+      "options": {
+        "A": "<class 'tuple'>",
+        "B": "<class 'list'>",
+        "C": "<class 'dict'>",
+        "D": "<class 'set'>"
+      },
+      "correct_answer": "B",
+      "topic": "Python Data Types",
+      "difficulty": "easy",
+      "created_at": "2024-01-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "quizzes.question",
+    "pk": "50000000-0000-0000-0000-000000000003",
+    "fields": {
+      "quiz": "40000000-0000-0000-0000-000000000001",
+      "question_text": "What will happen if you access a list index that does not exist?",
+      "options": {
+        "A": "Returns None",
+        "B": "Returns 0",
+        "C": "Raises IndexError",
+        "D": "Raises KeyError"
+      },
+      "correct_answer": "C",
+      "topic": "Edge Cases",
+      "difficulty": "medium",
+      "created_at": "2024-01-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "quizzes.question",
+    "pk": "50000000-0000-0000-0000-000000000004",
+    "fields": {
+      "quiz": "40000000-0000-0000-0000-000000000002",
+      "question_text": "Which HTTP status code does DRF return for an unauthenticated request by default?",
+      "options": {
+        "A": "400",
+        "B": "403",
+        "C": "401",
+        "D": "404"
+      },
+      "correct_answer": "C",
+      "topic": "DRF Authentication",
+      "difficulty": "medium",
+      "created_at": "2024-01-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "quizzes.question",
+    "pk": "50000000-0000-0000-0000-000000000005",
+    "fields": {
+      "quiz": "40000000-0000-0000-0000-000000000002",
+      "question_text": "In JWT, what does the payload section contain?",
+      "options": {
+        "A": "Secret key",
+        "B": "Claims / user data",
+        "C": "Signature only",
+        "D": "Header algorithm"
+      },
+      "correct_answer": "B",
+      "topic": "JWT",
+      "difficulty": "medium",
+      "created_at": "2024-01-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "quizzes.quizattempt",
+    "pk": "60000000-0000-0000-0000-000000000001",
+    "fields": {
+      "student": "00000000-0000-0000-0000-000000000004",
+      "quiz": "40000000-0000-0000-0000-000000000001",
+      "status": "completed",
+      "score": 67,
+      "started_at": "2024-02-22T10:00:00Z",
+      "finished_at": "2024-02-22T10:12:00Z"
+    }
+  },
+  {
+    "model": "quizzes.quizattempt",
+    "pk": "60000000-0000-0000-0000-000000000002",
+    "fields": {
+      "student": "00000000-0000-0000-0000-000000000005",
+      "quiz": "40000000-0000-0000-0000-000000000001",
+      "status": "completed",
+      "score": 33,
+      "started_at": "2024-02-25T14:00:00Z",
+      "finished_at": "2024-02-25T14:10:00Z"
+    }
+  },
+  {
+    "model": "quizzes.quizanswer",
+    "pk": "61000000-0000-0000-0000-000000000001",
+    "fields": {
+      "attempt": "60000000-0000-0000-0000-000000000001",
+      "question": "50000000-0000-0000-0000-000000000001",
+      "selected_answer": "C",
+      "is_correct": true,
+      "answered_at": "2024-02-22T10:03:00Z"
+    }
+  },
+  {
+    "model": "quizzes.quizanswer",
+    "pk": "61000000-0000-0000-0000-000000000002",
+    "fields": {
+      "attempt": "60000000-0000-0000-0000-000000000001",
+      "question": "50000000-0000-0000-0000-000000000002",
+      "selected_answer": "B",
+      "is_correct": true,
+      "answered_at": "2024-02-22T10:06:00Z"
+    }
+  },
+  {
+    "model": "quizzes.quizanswer",
+    "pk": "61000000-0000-0000-0000-000000000003",
+    "fields": {
+      "attempt": "60000000-0000-0000-0000-000000000001",
+      "question": "50000000-0000-0000-0000-000000000003",
+      "selected_answer": "A",
+      "is_correct": false,
+      "answered_at": "2024-02-22T10:10:00Z"
+    }
+  },
+  {
+    "model": "quizzes.quizanswer",
+    "pk": "61000000-0000-0000-0000-000000000004",
+    "fields": {
+      "attempt": "60000000-0000-0000-0000-000000000002",
+      "question": "50000000-0000-0000-0000-000000000001",
+      "selected_answer": "A",
+      "is_correct": false,
+      "answered_at": "2024-02-25T14:03:00Z"
+    }
+  },
+  {
+    "model": "quizzes.quizanswer",
+    "pk": "61000000-0000-0000-0000-000000000005",
+    "fields": {
+      "attempt": "60000000-0000-0000-0000-000000000002",
+      "question": "50000000-0000-0000-0000-000000000002",
+      "selected_answer": "B",
+      "is_correct": true,
+      "answered_at": "2024-02-25T14:06:00Z"
+    }
+  },
+  {
+    "model": "quizzes.quizanswer",
+    "pk": "61000000-0000-0000-0000-000000000006",
+    "fields": {
+      "attempt": "60000000-0000-0000-0000-000000000002",
+      "question": "50000000-0000-0000-0000-000000000003",
+      "selected_answer": "D",
+      "is_correct": false,
+      "answered_at": "2024-02-25T14:09:00Z"
+    }
+  },
+  {
+    "model": "battle.battleroom",
+    "pk": "70000000-0000-0000-0000-000000000001",
+    "fields": {
+      "player1": "00000000-0000-0000-0000-000000000004",
+      "player2": "00000000-0000-0000-0000-000000000005",
+      "quiz": "40000000-0000-0000-0000-000000000001",
+      "status": "finished",
+      "winner": "00000000-0000-0000-0000-000000000004",
+      "created_at": "2024-03-10T15:00:00Z",
+      "started_at": "2024-03-10T15:01:00Z",
+      "finished_at": "2024-03-10T15:08:00Z"
+    }
+  },
+  {
+    "model": "battle.battleroom",
+    "pk": "70000000-0000-0000-0000-000000000002",
+    "fields": {
+      "player1": "00000000-0000-0000-0000-000000000006",
+      "player2": null,
+      "quiz": "40000000-0000-0000-0000-000000000001",
+      "status": "waiting",
+      "winner": null,
+      "created_at": "2024-03-15T10:00:00Z",
+      "started_at": null,
+      "finished_at": null
+    }
+  },
+  {
+    "model": "battle.battlequestion",
+    "pk": "80000000-0000-0000-0000-000000000001",
+    "fields": {
+      "battle": "70000000-0000-0000-0000-000000000001",
+      "question": "50000000-0000-0000-0000-000000000001",
+      "order": 1
+    }
+  },
+  {
+    "model": "battle.battlequestion",
+    "pk": "80000000-0000-0000-0000-000000000002",
+    "fields": {
+      "battle": "70000000-0000-0000-0000-000000000001",
+      "question": "50000000-0000-0000-0000-000000000003",
+      "order": 2
+    }
+  },
+  {
+    "model": "battle.battlesubmission",
+    "pk": "90000000-0000-0000-0000-000000000001",
+    "fields": {
+      "battle": "70000000-0000-0000-0000-000000000001",
+      "user": "00000000-0000-0000-0000-000000000004",
+      "question": "50000000-0000-0000-0000-000000000001",
+      "answer": "C",
+      "is_correct": true,
+      "submitted_at": "2024-03-10T15:02:30Z"
+    }
+  },
+  {
+    "model": "battle.battlesubmission",
+    "pk": "90000000-0000-0000-0000-000000000002",
+    "fields": {
+      "battle": "70000000-0000-0000-0000-000000000001",
+      "user": "00000000-0000-0000-0000-000000000005",
+      "question": "50000000-0000-0000-0000-000000000001",
+      "answer": "A",
+      "is_correct": false,
+      "submitted_at": "2024-03-10T15:02:45Z"
+    }
+  },
+  {
+    "model": "battle.battlesubmission",
+    "pk": "90000000-0000-0000-0000-000000000003",
+    "fields": {
+      "battle": "70000000-0000-0000-0000-000000000001",
+      "user": "00000000-0000-0000-0000-000000000004",
+      "question": "50000000-0000-0000-0000-000000000003",
+      "answer": "C",
+      "is_correct": true,
+      "submitted_at": "2024-03-10T15:05:10Z"
+    }
+  },
+  {
+    "model": "analytics.mistakelog",
+    "pk": "a0000000-0000-0000-0000-000000000001",
+    "fields": {
+      "user": "00000000-0000-0000-0000-000000000004",
+      "question": "50000000-0000-0000-0000-000000000003",
+      "selected_answer": "A",
+      "correct_answer": "C",
+      "topic": "Edge Cases",
+      "source": "quiz",
+      "created_at": "2024-02-22T10:10:00Z"
+    }
+  },
+  {
+    "model": "analytics.mistakelog",
+    "pk": "a0000000-0000-0000-0000-000000000002",
+    "fields": {
+      "user": "00000000-0000-0000-0000-000000000005",
+      "question": "50000000-0000-0000-0000-000000000001",
+      "selected_answer": "A",
+      "correct_answer": "C",
+      "topic": "Python Data Types",
+      "source": "quiz",
+      "created_at": "2024-02-25T14:03:00Z"
+    }
+  },
+  {
+    "model": "analytics.mistakelog",
+    "pk": "a0000000-0000-0000-0000-000000000003",
+    "fields": {
+      "user": "00000000-0000-0000-0000-000000000005",
+      "question": "50000000-0000-0000-0000-000000000003",
+      "selected_answer": "D",
+      "correct_answer": "C",
+      "topic": "Edge Cases",
+      "source": "quiz",
+      "created_at": "2024-02-25T14:09:00Z"
+    }
+  },
+  {
+    "model": "analytics.mistakelog",
+    "pk": "a0000000-0000-0000-0000-000000000004",
+    "fields": {
+      "user": "00000000-0000-0000-0000-000000000005",
+      "question": "50000000-0000-0000-0000-000000000001",
+      "selected_answer": "B",
+      "correct_answer": "C",
+      "topic": "Python Data Types",
+      "source": "battle",
+      "created_at": "2024-03-10T15:02:45Z"
+    }
+  },
+ {
+  "model": "analytics.mistakeanalysis",
+  "pk": "b0000000-0000-0000-0000-000000000004",
+  "fields": {
+    "user": "00000000-0000-0000-0000-000000000005",
+    "topic": "Python",
+    "mistake_count": 1,
+    "suggestion": "",
+    "last_updated": "2024-02-25T14:09:00Z"
+  }
+},
+{
+  "model": "analytics.mistakeanalysis",
+  "pk": "b0000000-0000-0000-0000-000000000005",
+  "fields": {
+    "user": "00000000-0000-0000-0000-000000000005",
+    "topic": "C++",
+    "mistake_count": 1,
+    "suggestion": "",
+    "last_updated": "2024-02-25T14:09:00Z"
+  }
+},
+{
+  "model": "analytics.mistakeanalysis",
+  "pk": "b0000000-0000-0000-0000-000000000006",
+  "fields": {
+    "user": "00000000-0000-0000-0000-000000000005",
+    "topic": "Edge Cases",
+    "mistake_count": 1,
+    "suggestion": "",
+    "last_updated": "2024-02-25T14:09:00Z"
+  }
+},
+  {
+    "model": "analytics.coursesanalytics",
+    "pk": "c0000000-0000-0000-0000-000000000001",
+    "fields": {
+      "course": "20000000-0000-0000-0000-000000000001",
+      "date": "2024-02-29",
+      "total_enrollments": 2,
+      "new_enrollments": 2,
+      "revenue": "0.00",
+      "created_at": "2024-03-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "analytics.coursesanalytics",
+    "pk": "c0000000-0000-0000-0000-000000000002",
+    "fields": {
+      "course": "20000000-0000-0000-0000-000000000002",
+      "date": "2024-02-29",
+      "total_enrollments": 1,
+      "new_enrollments": 1,
+      "revenue": "499.00",
+      "created_at": "2024-03-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "analytics.coursesanalytics",
+    "pk": "c0000000-0000-0000-0000-000000000003",
+    "fields": {
+      "course": "20000000-0000-0000-0000-000000000003",
+      "date": "2024-03-31",
+      "total_enrollments": 1,
+      "new_enrollments": 1,
+      "revenue": "699.00",
+      "created_at": "2024-04-01T00:00:00Z"
+    }
+  }
+]

@@ -17,6 +17,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     phone_number = models.CharField(max_length=20, blank=True)
     address = models.TextField(blank=True)
     role = models.CharField(max_length=20, choices=Role.choices, default=Role.STUDENT)
+    profile = models.ImageField(upload_to="accounts/profile/", null=True, blank=True)
     
     is_verified = models.BooleanField(default=False)
     is_active = models.BooleanField(default=True)
