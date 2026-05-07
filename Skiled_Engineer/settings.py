@@ -1,6 +1,7 @@
 import os
 from pathlib import Path
 from decouple import config
+from datetime import timedelta
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -27,8 +28,12 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'rest_framework_simplejwt.token_blacklist',
+    'rest_framework_simplejwt',
     "debug_toolbar",
     "rest_framework",
+    'djoser',
+    'django_filters',
     'api',
     'battle',
     'accounts',
@@ -120,7 +125,39 @@ USE_TZ = True
 STATIC_URL = 'static/'
 MEDIA_URL = "/media/"
 MEDIA_ROOT = os.path.join(BASE_DIR, "media")
+DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 REST_FRAMEWORK = {
     'COERCE_DECIMAL_TO_STRING': False,
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    )
+}
+
+SIMPLE_JWT = {
+   'AUTH_HEADER_TYPES': ('JWT',),
+   'ACCESS_TOKEN_LIFETIME': timedelta(days=7),
+   'REFRESH_TOKEN_LIFETIME': timedelta(days=30), 
+   'BLACKLIST_AFTER_ROTATION': True,              
+   'UPDATE_LAST_LOGIN': True,
+}
+
+DJOSER = {
+    'LOGIN_FIELD': 'email',
+    'TOKEN_MODEL': None,                    
+ 
+    # Email verification
+    'SEND_ACTIVATION_EMAIL': True,
+    'ACTIVATION_URL': 'activate/{uid}/{token}',
+ 
+    # Password reset
+    'SEND_PASSWORD_RESET_EMAIL': True,
+    'PASSWORD_RESET_CONFIRM_URL': 'password/reset/confirm/{uid}/{token}',
+ 
+    # Custom serializers
+    'SERIALIZERS': {
+        'user_create': 'accounts.serializers.RegisterSerializer',
+        'current_user': 'accounts.serializers.ProfileSerializer',
+        'user': 'accounts.serializers.ProfileUpdateSerializer',
+    },
 }

@@ -24,6 +24,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     is_staff = models.BooleanField(default=False)
     date_joined = models.DateTimeField(default=timezone.now)
     created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now_add=True)
     
     USERNAME_FIELD = "email"
     REQUIRED_FIELDS = ["name"]
@@ -59,6 +60,22 @@ class EmailVerificationToken(models.Model):
     class Meta:
         db_table = "email_verification_tokens"
         
-    def __set__(self):
+    def __str__(self):                         
         return f"VerificationToken for {self.user}"
+ 
+ 
+class PasswordResetToken(models.Model):
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    user = models.OneToOneField(
+        User, on_delete=models.CASCADE, related_name="password_reset_token"
+    )
+    token = models.UUIDField(default=uuid.uuid4, unique=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    expires_at = models.DateTimeField()
+ 
+    class Meta:
+        db_table = "password_reset_tokens"
+ 
+    def __str__(self):
+        return f"PasswordResetToken for {self.user}"
     
