@@ -42,6 +42,7 @@ class BattleRoom(models.Model):
         related_name="battles_won",
     )
     
+    invite_code = models.CharField(max_length=16, null=True, blank=True, unique=True)
     created_at = models.DateTimeField(auto_now_add=True)
     started_at = models.DateTimeField(null=True, blank=True)
     finished_at = models.DateTimeField(null=True, blank=True)
@@ -49,11 +50,14 @@ class BattleRoom(models.Model):
     class Meta:
         db_table = "battle_rooms"
         ordering = ["-created_at"]
-    
+        
     def __str__(self):
         p2 = self.player2.name if self.player2 else "waiting.."
         return f"Battle: {self.player1.name} vs {p2} [{self.status}]"
 
+    @property
+    def is_private(self):
+        return self.invite_code is not None
 class BattleQuestion(models.Model):
     """Questions assigned to specific BattleRoom (subset of quiz quest)."""
     
