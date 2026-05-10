@@ -9,3 +9,21 @@ class IsAdminOrReadOnly(permissions.BasePermission):
 class FullDjangoModelPermission(permissions.BasePermission):
     def __init__(self):
         self.perms_map['GET'] = ['%(app_label)s.view_%(model_name)s']
+
+class IsTeacherOrAdmin(permissions.BasePermission):
+    def has_permission(self, request, view):
+        return bool(
+            request.user and request.user.is_authenticated and
+            (request.user.is_staff or request.user.role == "teacher")
+        )
+        
+class IsOwnerOrAdmin(permissions.BasePermission):
+    def has_object_permission(self, request, view, obj):
+        if request.user.is_staff:
+            return True
+        return obj.instructor == request.user
+    
+class IsAdminUser(permissions.BasePermission):
+    """Full access for admin/staff only."""
+    def has_permission(self, request, view):
+        return bool(request.user and request.user.is_staff)
