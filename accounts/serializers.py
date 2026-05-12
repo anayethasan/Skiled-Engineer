@@ -21,7 +21,7 @@ class ProfileSerializer(BaseUserSerializer):
     """
     class Meta(BaseUserSerializer.Meta):
         model = User
-        fields = ["id", "name", "first_name", "last_name", "email", "phone_number", "address","role", "profile", "is_verified", "date_joined", "created_at", "update_at",]
+        fields = ["id", "name", "first_name", "last_name", "email", "phone_number", "address","role", "profile", "is_verified", "date_joined", "created_at", "updated_at",]
 
         read_only_fields = ["id", "email", "role", "is_verified", "date_joined", "created_at", "updated_at",]
 

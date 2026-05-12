@@ -1,10 +1,11 @@
 import uuid
 from django.db import models
-from django.core.validators import MinLengthValidator, MaxLengthValidator
+from django.core.validators import MinValueValidator, MaxValueValidator
 from django.conf import settings
 
 class Enrollment(models.Model):
-    id = models.URLField(primary_key=True, default=uuid.uuid4, editable=False)
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    
     student = models.ForeignKey(
         settings.AUTH_USER_MODEL,
         on_delete=models.CASCADE,
@@ -19,7 +20,7 @@ class Enrollment(models.Model):
     #0-100 percentage of course completion
     progress = models.PositiveSmallIntegerField(
         default=0,
-        validators=[MinLengthValidator(0), MaxLengthValidator(100)],
+        validators=[MinValueValidator(0), MaxValueValidator(100)],
     )
     is_completed = models.BooleanField(default=False)
     enrolled_at = models.DateTimeField(auto_now_add=True)
