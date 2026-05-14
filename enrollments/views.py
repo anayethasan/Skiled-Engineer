@@ -8,86 +8,128 @@ from rest_framework.filters import OrderingFilter
 
 from enrollments.models import Enrollment
 from enrollments import serializers as sz
-
 from api.pagination import DefaultPagination
-from api.permissions import IsAdminUser
+
 
 class EnrollmentViewSet(viewsets.ModelViewSet):
     """
-    Enrollment CRUD with role-base access.
+    Manage course enrollments with role-based access.
+
     list:
-        Student → own enrollments only.
-        Admin   → all enrollments.
-        Filter: ?course=, ?is_completed=
+        GET /enrollments/
+        Returns a paginated list of enrollments.
+        Student: only their own enrollments.
+        Admin: all enrollments across all students.
+
+        Filters:
+            - is_completed (bool): true or false.
+            - course (uuid): Filter by course ID.
+
         Ordering: enrolled_at, progress
+        Example: GET /enrollments/?is_completed=false&ordering=-enrolled_at
+
     retrieve:
-        Student → own only.
-        Admin   → any.
+        GET /enrollments/<id>/
+        Returns full detail of a single enrollment including course info.
+        Student: own enrollments only. Admin: any.
+
     create:
-        Student only. Body: { course: <uuid> }
-        Validates: course must be PUBLISHED, no duplicate enrollment.
+        POST /enrollments/
+        Student only. Enrolls the authenticated student in a course.
+        Teachers and admins are blocked from enrolling.
+
+        Validations:
+            - Course must be PUBLISHED.
+            - Student cannot enroll in the same course twice.
+
+        Request body:
+            - course (uuid, required): The course to enroll in.
+
+        Responses:
+            201: Enrolled successfully.
+            400: Already enrolled or course not published.
+            403: Non-student caller.
+
+        Example:
+            POST /enrollments/
+            { "course": "<uuid>" }
+
     destroy:
-        Student can unenroll (own only). Admin can delete any.
+        DELETE /enrollments/<id>/
+        Unenroll from a course. Student can only unenroll from own enrollment.
+        Admin can delete any enrollment.
+
+        Responses:
+            200: Successfully unenrolled.
+            403: Attempting to unenroll another student's enrollment.
+
+        Example:
+            DELETE /enrollments/<id>/
+
     progress:
-        Student updates own progress (0-100).
-        Auto-marks is_completed=True when progress hits 100.
+        PATCH /enrollments/<id>/progress/
+        Update the student's progress for an enrollment (0–100).
+        Student can only update own progress. Admin can update any.
+        Automatically sets is_completed=True and records completed_at
+        when progress reaches 100.
+
+        Request body:
+            - progress (int, required): Value between 0 and 100.
+
+        Responses:
+            200: Progress updated. Returns full enrollment detail.
+            400: Progress value out of range.
+            403: Attempting to update another student's progress.
+
+        Example:
+            PATCH /enrollments/<id>/progress/
+            { "progress": 75 }
     """
-    http_method_names = ["get", "post", "patch", "delete", "head", "options"]
-    pagination_class = DefaultPagination
+
+    http_method_names  = ["get", "post", "patch", "delete", "head", "options"]
+    pagination_class   = DefaultPagination
     permission_classes = [IsAuthenticated]
-    filter_backends = [DjangoFilterBackend, OrderingFilter]
-    filterset_fields = ["is_completed", "course"]
-    Ordering_fields = ["enrolled_at", "progress"]
-    ordering = ["-enrolled_at"]
-    
+    filter_backends    = [DjangoFilterBackend, OrderingFilter]
+    filterset_fields   = ["is_completed", "course"]
+    ordering_fields    = ["enrolled_at", "progress"]   
+    ordering           = ["-enrolled_at"]
+
     def get_queryset(self):
         user = self.request.user
-        qs = Enrollment.objects.select_related(
+        qs   = Enrollment.objects.select_related(
             "student", "course", "course__instructor"
         )
         if user.is_staff:
             return qs
-        #student own enrollment only
         return qs.filter(student=user)
-    
+
     def get_serializer_class(self):
         if self.action == "create":
             return sz.EnrollmentCreateSerializer
         if self.action == "retrieve":
-            return sz.EnrollmentListSerializer
+            return sz.EnrollmentDetailSerializer      
         if self.action == "progress":
-            return sz.EnrollmentListSerializer
-        return sz.ProgressUpdateSerializer
-    
-    def get_permissions(self):
-        if self.action == "create":
-            #Only Student can enroll 
-            return [IsAuthenticated()]
-        return [IsAuthenticated()]
-    
+            return sz.ProgressUpdateSerializer        
+        return sz.EnrollmentListSerializer            
+
     def create(self, request, *args, **kwargs):
-        #Block teachers and admin from enrolling
         if request.user.role != "student":
             return Response(
-                {"detail": "Only students can enroll in course."},
+                {"detail": "Only students can enroll in courses."},
                 status=status.HTTP_403_FORBIDDEN,
             )
         return super().create(request, *args, **kwargs)
-    
+
     def destroy(self, request, *args, **kwargs):
         enrollment = self.get_object()
-        #student can only uneroll from own enrollment 
         if not request.user.is_staff and enrollment.student != request.user:
             return Response(
                 {"detail": "You can only unenroll from your own enrollments."},
                 status=status.HTTP_403_FORBIDDEN,
             )
         enrollment.delete()
-        return Response(
-            {"message": "Successfully unenrolled."},
-            status=status.HTTP_200_OK,
-        )
- 
+        return Response({"message": "Successfully unenrolled."}, status=status.HTTP_200_OK)
+
     @action(detail=True, methods=["patch"], url_path="progress")
     def progress(self, request, pk=None):
         enrollment = self.get_object()
@@ -98,12 +140,14 @@ class EnrollmentViewSet(viewsets.ModelViewSet):
                 status=status.HTTP_403_FORBIDDEN,
             )
 
-        serializer = ProgressUpdateSerializer(
+        serializer = sz.ProgressUpdateSerializer(      
             enrollment, data=request.data, partial=True
         )
         serializer.is_valid(raise_exception=True)
         serializer.save()
-        
+
         return Response(
-            EnrollmentDetailSerializer(enrollment, context={"request": request}).data
+            sz.EnrollmentDetailSerializer(              
+                enrollment, context={"request": request}
+            ).data
         )

@@ -3,6 +3,7 @@ from django.db import models
 from django.utils import timezone
 from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin
 from accounts.manager import CustomUserManager
+from cloudinary.models import CloudinaryField
 
 class User(AbstractBaseUser, PermissionsMixin):
     class Role(models.TextChoices):
@@ -17,7 +18,8 @@ class User(AbstractBaseUser, PermissionsMixin):
     phone_number = models.CharField(max_length=20, blank=True)
     address = models.TextField(blank=True)
     role = models.CharField(max_length=20, choices=Role.choices, default=Role.STUDENT)
-    profile = models.ImageField(upload_to="accounts/profile/", null=True, blank=True)
+    # profile = models.ImageField(upload_to="accounts/profile/", null=True, blank=True)
+    profile = CloudinaryField("profile", null=True, blank=True)
     
     is_verified = models.BooleanField(default=False)
     is_active = models.BooleanField(default=True)

@@ -1,7 +1,7 @@
 from rest_framework import viewsets, status
 from rest_framework.decorators import action
-from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated, IsAdminUser
+from rest_framework.response import Response
 
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework.filters import OrderingFilter
@@ -15,39 +15,61 @@ from .serializers import (
     PurchaseSerializer,
     AdminDashboardSerializer,
 )
-from .services import MistakeService, AnalyticsService, PurchaseService
-from .filters import MistakeLogFilter, MistakeAnalysisFilter, CoursesAnalyticsFilter, PurchaseFilter
+from .services import MistakeService, AnalyticsService
+from .filters import MistakeLogFilter, CoursesAnalyticsFilter, PurchaseFilter
 from api.pagination import DefaultPagination
 
 
 class MistakeLogViewSet(viewsets.ReadOnlyModelViewSet):
     """
-    Student → own wrong-answer history.
-    Admin   → all students' mistake logs.
+    View and analyze a student's wrong-answer history.
+    Admins can view all students' mistake logs.
 
     list:
-        Student: returns paginated list of own mistakes.
-        Admin:   returns all mistakes across all students.
-        Supports filtering via MistakeLogFilter (source, topic, from_date, to_date).
-        Admin extra filter: ?user_id=<uuid>
-        Supports ordering by created_at, topic.
+        Returns a paginated list of mistake logs.
+        Student: only their own mistakes.
+        Admin: all students' mistakes.
+
+        Filters:
+            - source (string): Filter by source — 'quiz' or 'battle'.
+            - topic (string): Filter by topic (case-insensitive).
+            - from_date (date): Only mistakes from this date onward.
+            - to_date (date): Only mistakes up to this date.
+            - user_id (uuid, admin only): Filter by a specific student.
+
+        Ordering: created_at, topic
+        Example: GET /analytics/mistakes/?source=quiz&topic=algebra
 
     retrieve:
-        Returns detail of a single MistakeLog entry.
+        Returns the full detail of a single MistakeLog entry.
+        Student: own entries only. Admin: any entry.
+
+        Example: GET /analytics/mistakes/<id>/
 
     analysis:
-        GET /api/analytics/mistakes/analysis/
-        Returns per-topic mistake count + suggestion for the logged-in student.
-        Filters: ?topic=, ?min_mistakes=, ?max_mistakes=
+        GET /analytics/mistakes/analysis/
+        Returns per-topic mistake count and a suggestion string
+        for the currently logged-in student.
+
+        Filters:
+            - topic (string): Filter by topic.
+            - min_mistakes (int): Minimum mistake count.
+            - max_mistakes (int): Maximum mistake count.
+
+        Example: GET /analytics/mistakes/analysis/?topic=algebra&min_mistakes=3
 
     weak_topics:
-        GET /api/analytics/mistakes/weak-topics/?limit=5
-        Returns top N weakest topics for the logged-in student.
+        GET /analytics/mistakes/weak-topics/?limit=5
+        Returns the top N topics with the most mistakes for the logged-in student.
+
+        Query params:
+            - limit (int, default=5): Number of topics to return.
+
+        Example: GET /analytics/mistakes/weak-topics/?limit=10
     """
+
     queryset = MistakeLog.objects.select_related(
-        "user",
-        "question",
-        "question__quiz__course",
+        "user", "question", "question__quiz__course",
     ).order_by("-created_at")
 
     serializer_class = MistakeLogSerializer
@@ -73,11 +95,7 @@ class MistakeLogViewSet(viewsets.ReadOnlyModelViewSet):
 
     @action(detail=False, methods=["get"], url_path="analysis")
     def analysis(self, request):
-        """GET /api/analytics/mistakes/analysis/"""
-        qs = MistakeAnalysis.objects.filter(
-            user=request.user
-        ).order_by("-mistake_count")
-
+        qs    = MistakeAnalysis.objects.filter(user=request.user).order_by("-mistake_count")
         topic = request.query_params.get("topic")
         min_m = request.query_params.get("min_mistakes")
         max_m = request.query_params.get("max_mistakes")
@@ -90,14 +108,11 @@ class MistakeLogViewSet(viewsets.ReadOnlyModelViewSet):
 
         page = self.paginate_queryset(qs)
         if page is not None:
-            return self.get_paginated_response(
-                MistakeAnalysisSerializer(page, many=True).data
-            )
+            return self.get_paginated_response(MistakeAnalysisSerializer(page, many=True).data)
         return Response(MistakeAnalysisSerializer(qs, many=True).data)
 
     @action(detail=False, methods=["get"], url_path="weak-topics")
     def weak_topics(self, request):
-        """GET /api/analytics/mistakes/weak-topics/?limit=5"""
         limit  = int(request.query_params.get("limit", 5))
         topics = MistakeService.get_weakest_topics(user=request.user, limit=limit)
         data   = MistakeAnalysisSerializer(topics, many=True).data
@@ -106,24 +121,39 @@ class MistakeLogViewSet(viewsets.ReadOnlyModelViewSet):
 
 class CourseAnalyticsViewSet(viewsets.ReadOnlyModelViewSet):
     """
-    Admin only. Daily course-level snapshots.
+    Admin only. Daily snapshot analytics for each course.
 
     list:
-        Returns paginated list of all course analytics snapshots.
-        Supports filtering via CoursesAnalyticsFilter (course, from_date, to_date).
-        Supports ordering by date, total_enrollments, revenue.
+        Returns a paginated list of course analytics snapshots.
+        Each record represents one day's data for one course.
+
+        Filters:
+            - course (uuid): Filter by course ID.
+            - from_date (date): Snapshots from this date onward.
+            - to_date (date): Snapshots up to this date.
+
+        Ordering: date, total_enrollments, revenue
+        Example: GET /analytics/course-stats/?from_date=2025-01-01
 
     retrieve:
-        Returns detail of a single snapshot entry.
+        Returns the full detail of a single analytics snapshot.
+
+        Example: GET /analytics/course-stats/<id>/
 
     summary:
-        GET /api/analytics/course-stats/summary/?days=7
-        Aggregated revenue + enrollment totals for last N days.
+        GET /analytics/course-stats/summary/?days=7
+        Returns aggregated totals for revenue, enrollments, and new
+        enrollments over the last N days.
+
+        Query params:
+            - days (int, default=7): Number of past days to aggregate.
+              Use days=30 for a monthly summary.
+
+        Example: GET /analytics/course-stats/summary/?days=30
     """
+
     queryset = CoursesAnalytics.objects.select_related(
-        "course",
-        "course__department",
-        "course__instructor",
+        "course", "course__department", "course__instructor",
     ).order_by("-date")
 
     serializer_class   = CoursesAnalyticsSerializer
@@ -136,7 +166,6 @@ class CourseAnalyticsViewSet(viewsets.ReadOnlyModelViewSet):
 
     @action(detail=False, methods=["get"], url_path="summary")
     def summary(self, request):
-        """GET /api/analytics/course-stats/summary/?days=7"""
         days   = int(request.query_params.get("days", 7))
         data   = AnalyticsService.get_summary(days=days)
         serial = CoursesAnalyticsSummarySerializer(data)
@@ -145,21 +174,28 @@ class CourseAnalyticsViewSet(viewsets.ReadOnlyModelViewSet):
 
 class PurchaseViewSet(viewsets.ReadOnlyModelViewSet):
     """
-    Admin only. All course purchases.
+    Admin only. View all course purchase records.
 
     list:
-        Returns paginated list of all purchases.
-        Supports filtering via PurchaseFilter (status, course, from_date, to_date).
-        Admin extra filter: ?user_id=<uuid>
-        Supports ordering by created_at, amount, status.
+        Returns a paginated list of all purchases across all students.
+
+        Filters:
+            - status (string): Filter by purchase status — 'pending', 'completed', 'failed'.
+            - course (uuid): Filter by course ID.
+            - from_date (date): Purchases from this date onward.
+            - to_date (date): Purchases up to this date.
+            - user_id (uuid): Filter by a specific student.
+
+        Ordering: created_at, amount, status
+        Example: GET /analytics/purchases/?status=completed&course=<uuid>
 
     retrieve:
-        Returns detail of a single purchase entry.
+        Returns the full detail of a single purchase record.
+
+        Example: GET /analytics/purchases/<id>/
     """
-    queryset = Purchase.objects.select_related(
-        "user",
-        "course",
-    ).order_by("-created_at")
+
+    queryset = Purchase.objects.select_related("user", "course").order_by("-created_at")
 
     serializer_class   = PurchaseSerializer
     permission_classes = [IsAdminUser]
@@ -179,11 +215,24 @@ class PurchaseViewSet(viewsets.ReadOnlyModelViewSet):
 
 class AdminDashboardViewSet(viewsets.ViewSet):
     """
-    Admin only. Single endpoint for all dashboard metrics.
-    GET /api/analytics/dashboard/
-    Returns revenue totals, enrollment totals, popular courses,
-    top students, and platform-wide counts.
+    Admin only. Single endpoint returning all key platform metrics.
+
+    list:
+        GET /analytics/dashboard/
+        Returns a comprehensive dashboard snapshot including:
+            - total_revenue_7d: Total revenue from the last 7 days.
+            - total_revenue_30d: Total revenue from the last 30 days.
+            - total_enrollments_7d: New enrollments in the last 7 days.
+            - total_enrollments_30d: New enrollments in the last 30 days.
+            - popular_courses: Top 5 most enrolled courses (last 30 days).
+            - top_students: Top 5 students by completed courses.
+            - total_courses: Total number of courses on the platform.
+            - total_students: Total number of student accounts.
+            - total_teachers: Total number of teacher accounts.
+
+        Example: GET /analytics/dashboard/
     """
+
     permission_classes = [IsAdminUser]
 
     def list(self, request):

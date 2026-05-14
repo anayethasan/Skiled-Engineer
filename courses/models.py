@@ -1,6 +1,7 @@
 import uuid
 from django.db import models
 from django.conf import settings
+from cloudinary.models import CloudinaryField
 
 
 class Department(models.Model):
@@ -42,7 +43,8 @@ class Course(models.Model):
         limit_choices_to={"role": "teacher"},
     )
     status = models.CharField(max_length=10, choices=Status.choices, default=Status.DRAFT)
-    thumbnail = models.ImageField(upload_to="course_thumbnails/", null=True, blank=True)
+    # thumbnail = models.ImageField(upload_to="course_thumbnails/", null=True, blank=True)
+    thumbnail = CloudinaryField('thumbnail', null=True, blank=True)
     # Future: price field ready for payment gateway
     price = models.DecimalField(max_digits=10, decimal_places=2, default=0.00)
     is_free = models.BooleanField(default=True)
