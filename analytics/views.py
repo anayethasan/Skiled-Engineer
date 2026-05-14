@@ -85,6 +85,8 @@ class MistakeLogViewSet(viewsets.ReadOnlyModelViewSet):
         return [IsAuthenticated()]
 
     def get_queryset(self):
+        if getattr(self, 'swagger_fake_view', False):
+            return MistakeLog.objects.none()
         qs = super().get_queryset()
         if self.request.user.is_staff:
             user_id = self.request.query_params.get("user_id")

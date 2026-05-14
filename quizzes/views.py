@@ -263,6 +263,9 @@ class QuizAttemptViewSet(viewsets.ReadOnlyModelViewSet):
     ordering           = ["-started_at"]
 
     def get_queryset(self):
+        if getattr(self, 'swagger_fake_view', False): #this is error handing for swagger
+            return QuizAttempt.objects.none()
+        
         user = self.request.user
         qs   = QuizAttempt.objects.filter(
             quiz_id=self.kwargs.get("quiz_pk"),

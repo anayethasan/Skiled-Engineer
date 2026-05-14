@@ -160,6 +160,8 @@ class BattleRoomViewSet(viewsets.ModelViewSet):
     ordering           = ["-created_at"]
 
     def get_queryset(self):
+        if getattr(self, 'swagger_fake_view', False):
+            return BattleRoom.objects.none()
         user = self.request.user
         qs   = BattleRoom.objects.select_related(
             "player1", "player2", "winner", "quiz"

@@ -95,6 +95,9 @@ class EnrollmentViewSet(viewsets.ModelViewSet):
     ordering           = ["-enrolled_at"]
 
     def get_queryset(self):
+        if getattr(self, 'swagger_fake_view', False):
+            return Enrollment.objects.none()
+        
         user = self.request.user
         qs   = Enrollment.objects.select_related(
             "student", "course", "course__instructor"
